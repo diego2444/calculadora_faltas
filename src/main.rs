@@ -9,7 +9,7 @@ fn main() {
     match io::stdin().read_line(&mut input) {
         Ok(_) => {
             let asignatura = input.trim();
-            println!("Seleccionaste la asignatura: {}", asignatura);
+            println!("Has seleccionado: {}", asignatura);
 
             let horas = match asignatura {
                 "iso" => 210,
@@ -23,8 +23,8 @@ fn main() {
                     return;
                 }
             };
-            println!("Esta asignatura tiene {} horas", horas);
-            println!("Cuantas horas has faltado a {}?", asignatura);
+            println!("Esta asignatura tiene {} horas.", horas);
+            println!("¿Cuántas horas has faltado a {}?", asignatura);
 
             let mut faltas = String::new();
             match io::stdin().read_line(&mut faltas) {
@@ -36,7 +36,17 @@ fn main() {
                             return;
                         }
                     };
-                    println!("Has faltado {} horas a esa asignatura? xd erga mano", faltas);
+                    let porcentaje_faltas = (faltas as f64 / horas as f64) * 100.0;
+                    println!("Tu porcentaje de faltas en {} es: {:.2}%", asignatura, porcentaje_faltas);
+                    
+                    if porcentaje_faltas > 15.0 {
+                        println!("Nooo, ya has superado el 15% :(")
+                    }
+                    else if porcentaje_faltas >= 10.0 {
+                        println!("¡Ojo! has faltado más del 10% en {}.", asignatura)
+                    } else {
+                        println!("Por ahora no tendrías que tener problemas, sigue así :)")
+                    }
                 }
                 Err(error) => {
                     println!("Error al leer la entrada de faltas: {}", error);
